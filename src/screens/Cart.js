@@ -7,32 +7,43 @@ import {
   StyleSheet,
 } from 'react-native';
 import React from 'react';
-import {data} from '../data/data';
-import {useDispatch} from 'react-redux';
-import {addItemToCart} from '../../redux/action/Actions';
 import {useNavigation} from '@react-navigation/native';
+import {useDispatch, useSelector} from 'react-redux';
+import {removeItemFromCart} from '../../redux/action/Actions';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function Home() {
-  const navigation = useNavigation();
+
+export default  function Cart() {
+
+  const item = useSelector(state => state);
+
+  const dataString = JSON.stringify(item);
+  console.log('data-------->',dataString)  
+  AsyncStorage.setItem('myArray', dataString);
+
+
   const dispatch = useDispatch();
+  const removeItem = (index) => {
+    dispatch(removeItemFromCart(index));
+// try{
+//   const dataString =  AsyncStorage.getItem('item');
+//   const item = JSON.parse(dataString);
+// }catch{
 
-  const addItem = item => {
-    dispatch(addItemToCart(item));
-    //console.log('data--->', item)
+// }
   };
 
   const renderItem = ({item, index}) => {
     return (
       <View>
         <View style={styles.main_div}>
-          <Image   style={{width: 90, height: 80, borderRadius: 10}}  source={item.img}  />
+          <Image   style={{width: 90, height: 80, borderRadius: 10}}  source={item.img} />
           <Text style={styles.txxt}>{item.title} </Text>
-          <Text style={{position: 'absolute', right: 10, top: 12}}>   Pkr - {item.price}{' '}  </Text>
-          <TouchableOpacity  onPress={() => { navigation.navigate('Cart');
-              addItem(item);
-            }}
+          <Text style={{position: 'absolute', right: 10, top: 12}}>  Pkr - {item.price}{' '} </Text> 
+          <TouchableOpacity
+            onPress={() => {  removeItem(index);  }}      
             style={styles.plus_icon}>
-            <Text>Add To Cart</Text>
+            <Text style={{color: 'white'}}>Remove From Cart</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -40,10 +51,10 @@ export default function Home() {
   };
   return (
     <>
-      <Text style={styles.first_hed}>All Item List</Text>
+      <Text style={styles.first_hed}>Selected List</Text>
       <FlatList
         showsHorizontalScrollIndicator={false}
-        data={data}
+        data={item}
         renderItem={renderItem}
       />
     </>
@@ -53,7 +64,7 @@ export default function Home() {
 const styles = StyleSheet.create({
   txxt: {
     fontSize: 17,
-    color: 'black',
+    color: 'green',
     fontWeight: '600',
     marginTop: 10,
     marginLeft: 30,
@@ -78,7 +89,7 @@ const styles = StyleSheet.create({
   },
 
   plus_icon: {
-    backgroundColor: '#FFD200',
+    backgroundColor: 'red',
     height: 30,
     width: 135,
     borderRadius: 5,

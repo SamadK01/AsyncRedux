@@ -1,33 +1,44 @@
 export const data = [
   {
-    title: 'Royal Taj',
+    title: 'Zinger Burger',
     img: require('../img/burger.png'),
     price: '300',
     id: 1,
   },
   {
-    title: 'La-Mosh',
+    title: 'Sea Food',
     img: require('../img/fries.png'),
+    price: '400',
     id: 2,
   },
   {
-    title: 'Al-Fajar',
+    title: 'Russian Dish',
     img: require('../img/veg.png'),
+    price: '200',
     id: 3,
   },
   {
-    title: 'Indus',
+    title: 'Chinees',
     img: require('../img/spagti.png'),
+    price: '500',
     id: 4,
   },
   {
-    title: 'Lal Qila',
+    title: 'Zango',
     img: require('../img/zingr.jpg'),
+    price: '700',
     id: 5,
   },
   {
-    title: 'Pk Roll',
+    title: 'Pizza',
     img: require('../img/piza.jpg'),
+    price: '350',
     id: 6,
+  },
+  {
+    title: 'Chinees',
+    img: require('../img/zingr.jpg'),
+    price: '450',
+    id: 7,
   },
 ];
