@@ -51,9 +51,9 @@ export default function Sync() {
       <TouchableOpacity
         style={styles.txxtbtn}
         onPress={() => saveData(inputValue)}>
-        <Text style={{color: 'white'}}>Save Data</Text>
+        <Text style={{color: 'white'}}>Save Input Data</Text>
       </TouchableOpacity>
-      <FlatList data={data} renderItem={renderItem} />
+      <FlatList style={{backgroundColor:'green',padding:20,borderRadius:10,}} data={data} renderItem={renderItem} />
 
       <TouchableOpacity
         style={styles.txxtbtn}
@@ -61,6 +61,15 @@ export default function Sync() {
           navigation.navigate('Home');
         }}>
         <Text style={{color: 'white'}}>Check Cart Screen</Text>
+      </TouchableOpacity>
+
+
+      <TouchableOpacity
+        style={styles.txxtbtn}
+        onPress={() => {
+          navigation.navigate('SyncCustom');
+        }}>
+        <Text style={{color: 'white'}}>Go AsyncStorage Custom Hook</Text>
       </TouchableOpacity>
     </View>
   );
