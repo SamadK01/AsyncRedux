@@ -6,42 +6,49 @@ import {
   Text,
   StyleSheet,
 } from 'react-native';
-import React from 'react';
-import {useNavigation} from '@react-navigation/native';
+import React, {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {removeItemFromCart} from '../../redux/action/Actions';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-
-export default  function Cart() {
-
+export default function Cart() {
   const item = useSelector(state => state);
 
   const dataString = JSON.stringify(item);
-  console.log('data-------->',dataString)  
-  AsyncStorage.setItem('myArray', dataString);
-
+  // console.log('data-------->',dataString)
+  AsyncStorage.setItem('myArray', dataString)
+    .then(() => console.log('Successfully Added-->'))
+    .catch(error => console.log(`Error storing data : ${error}`));
 
   const dispatch = useDispatch();
-  const removeItem = (index) => {
+  const removeItem = index => {
     dispatch(removeItemFromCart(index));
-// try{
-//   const dataString =  AsyncStorage.getItem('item');
-//   const item = JSON.parse(dataString);
-// }catch{
-
-// }
   };
 
-  const renderItem = ({item, index}) => {
+  AsyncStorage.getItem('myArray')
+    .then(data => {
+      const parsedData = JSON.parse(data);
+      console.log('----Get Data--->', parsedData);
+    })
+    .catch(error => console.log(`Error reteriving data : ${error}`));
+
+  const renderItem = ({item, index, parsedData}) => {
     return (
       <View>
         <View style={styles.main_div}>
-          <Image   style={{width: 90, height: 80, borderRadius: 10}}  source={item.img} />
+          <Image
+            style={{width: 90, height: 80, borderRadius: 10}}
+            source={item.img}
+          />
           <Text style={styles.txxt}>{item.title} </Text>
-          <Text style={{position: 'absolute', right: 10, top: 12}}>  Pkr - {item.price}{' '} </Text> 
+          <Text style={{position: 'absolute', right: 10, top: 12}}>
+            {' '}
+            Pkr - {item.price}{' '}
+          </Text>
           <TouchableOpacity
-            onPress={() => {  removeItem(index);  }}      
+            onPress={() => {
+              removeItem(index);
+            }}
             style={styles.plus_icon}>
             <Text style={{color: 'white'}}>Remove From Cart</Text>
           </TouchableOpacity>
